@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Job Portal Dashboard</title>
+
+<style>
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    padding: 30px 20px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 14px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    transition: 0.4s;
+    background: rgba(255,255,255,0.05);
+}
+
+.sidebar a:hover {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    transform: translateX(6px);
+}
+
+/* ===== MAIN ===== */
+.main {
+    margin-left: 280px;
+    padding: 40px;
+}
+
+/* ===== HEADER ===== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 34px;
+}
+
+.logout {
+    padding: 10px 22px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout:hover {
+    transform: scale(1.08);
+}
+
+/* ===== CARDS ===== */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    padding: 30px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(20px);
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.25));
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* ===== JOB LIST ===== */
+.jobs {
+    margin-top: 50px;
+}
+
+.jobs h2 {
+    margin-bottom: 20px;
+}
+
+.job-box {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.job-box:hover {
+    background: rgba(0, 198, 255, 0.3);
+}
+
+.job-box h4 {
+    margin-bottom: 5px;
+}
+
+.job-box span {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* ===== OTP LOCK OVERLAY ===== */
+.otp-lock {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.otp-box {
+    background: #fff;
+    color: #000;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    width: 360px;
+}
+
+.otp-box h2 {
+    margin-bottom: 10px;
+}
+
+.otp-box p {
+    margin-bottom: 20px;
+}
+
+.otp-box a {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: #fff;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>JobPortal</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">My Profile</a>
+    <a href="#">Search Jobs</a>
+    <a href="#">Applications</a>
+    <a href="#">Saved Jobs</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <div class="header">
+        <h1>Welcome, {{ request.user.username }}</h1>
+        <a href="{% url 'logout' %}">
+            <button class="logout">Logout</button>
+        </a>
+    </div>
+
+    <!-- STATS -->
+    <div class="cards">
+        <div class="card">
+            <h3>Total Jobs</h3>
+            <p>128</p>
+        </div>
+        <div class="card">
+            <h3>Applied Jobs</h3>
+            <p>12</p>
+        </div>
+        <div class="card">
+            <h3>Saved Jobs</h3>
+            <p>9</p>
+        </div>
+        <div class="card">
+            <h3>Profile Strength</h3>
+            <p>80%</p>
+        </div>
+    </div>
+
+    <!-- JOBS -->
+    <div class="jobs">
+        <h2>Recommended Jobs</h2>
+
+        <div class="job-box">
+            <h4>Python Django Developer</h4>
+            <span>Bangalore · Full Time</span>
+        </div>
+
+        <div class="job-box">
+            <h4>Frontend Developer</h4>
+            <span>Remote · React</span>
+        </div>
+
+        <div class="job-box">
+            <h4>Data Analyst</h4>
+            <span>Hyderabad · Fresher</span>
+        </div>
+    </div>
+</div>
+
+<!-- OTP LOCK -->
+{% if not request.session.otp_verified %}
+<div class="otp-lock">
+    <div class="otp-box">
+        <h2>Security Verification</h2>
+        <p>Enter OTP sent to your email</p>
+
+        <form method="post" action="{% url 'verify_otp' %}">
+            {% csrf_token %}
+            <input type="text" name="otp" placeholder="Enter OTP" required>
+            <button type="submit">Verify</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>

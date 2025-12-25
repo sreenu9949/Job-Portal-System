@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Job Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(255,255,255,0.12), transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(255,255,255,0.1), transparent 40%);
+            animation: bgMove 14s infinite alternate;
+        }
+
+        @keyframes bgMove {
+            from { transform: scale(1); }
+            to { transform: scale(1.18); }
+        }
+
+        /* Center wrapper */
+        .register-wrapper {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Glass Card */
+        .register-card {
+            width: 420px;
+            padding: 45px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.45);
+            color: #fff;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Branding */
+        .brand h1 {
+            text-align: center;
+            font-size: 34px;
+            letter-spacing: 1px;
+        }
+
+        .brand span {
+            color: #00d4ff;
+        }
+
+        .brand p {
+            text-align: center;
+            margin: 8px 0 30px;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* Inputs */
+        .input-group {
+            position: relative;
+            margin-bottom: 26px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 10px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255,255,255,0.45);
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            appearance: none;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.65);
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label,
+        .input-group select:focus ~ label,
+        .input-group select:valid ~ label {
+            top: -8px;
+            font-size: 12px;
+            color: #00d4ff;
+        }
+
+        select option {
+            color: #000;
+        }
+
+        /* Button */
+        .register-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(0,212,255,0.55);
+        }
+
+        /* Footer Links */
+        .links {
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-animation"></div>
+
+<div class="register-wrapper">
+    <div class="register-card">
+
+        <div class="brand">
+            <h1>Job<span>Portal</span></h1>
+            <p>Create your professional account</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <input type="text" name="username" required>
+                <label>Username</label>
+            </div>
+
+            <div class="input-group">
+                <input type="email" name="email" required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password" required>
+                <label>Password</label>
+            </div>
+
+            <div class="input-group">
+                <select name="role" required>
+                    <option value="" disabled selected></option>
+                    <option value="jobseeker">Job Seeker</option>
+                    <option value="employer">Employer</option>
+                </select>
+                <label>Register As</label>
+            </div>
+
+            <button type="submit" class="register-btn">Create Account</button>
+        </form>
+
+        <div class="links">
+            <a href="{% url 'login' %}">Already have an account? Login</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
